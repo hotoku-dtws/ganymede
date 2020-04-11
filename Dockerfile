@@ -14,14 +14,13 @@ RUN \
   tar xzvf cmake-3.16.0.tar.gz &&\
   cd cmake-3.16.0 &&\
   ./bootstrap --parallel=4 &&\
-  make -j4 &&\
-  make install &&\
+  make -j4 install &&\
   apt update &&\
   apt-get install -y nodejs &&\
-  apt-get install -y npm
-RUN \
-  pip install \
-    pystan
+  apt-get install -y npm &&\
+  pip install pystan &&\
+  rm -rf /root/build
+
 RUN \
   pip install \
     Cython \
