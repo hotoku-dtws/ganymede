@@ -15,7 +15,7 @@ $ make image
 ### Jupyterの起動 & 終了
 
 ```
-$ docker run -it --rm -v [ホスト側の絶対パス]:/root/work -p [ホスト側のポート]:8888 hotokudtws/ganymede
+$ docker run -it --rm -v [ホスト側の絶対パス]:/root/work -p [ホスト側のポート]:8888 --name jupyterlab hotokudtws/ganymede
 ```
 
 * -v の`[ホスト側のパス]`の部分には、ホストマシン側の作業ディレクトリの**絶対パス**を書く。これによって、`[ホスト側のパス]`とコンテナ側の/root/workが繋がり、ホストからもコンテナからもアクセスできるようになる
