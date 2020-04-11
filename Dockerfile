@@ -1,5 +1,10 @@
 FROM python
 
+RUN mkdir -p /root/work
+WORKDIR /root/work
+
+COPY run-lab /usr/local/bin/run-lab
+RUN chmod u+x /usr/local/bin/run-lab
 
 
 RUN \
@@ -11,10 +16,13 @@ RUN \
   ./bootstrap --parallel=4 &&\
   make -j4 &&\
   make install &&\
-  mkdir -p /root/work &&\
   apt update &&\
   apt-get install -y nodejs &&\
-  apt-get install -y npm &&\
+  apt-get install -y npm
+RUN \
+  pip install \
+    pystan
+RUN \
   pip install \
     Cython \
     colormath \
@@ -33,7 +41,6 @@ RUN \
     optuna \
     pandas \
     plotly \
-    pystan \
     python-dateutil \
     scikit-learn \
     scipy \
@@ -42,14 +49,6 @@ RUN \
     xgboost \
     &&\
   jupyter labextension install @jupyterlab/toc &&\
-#  jupyter labextension install @jupyterlab/git &&\
-  jupyter lab build &&\
-  jupyter serverextension enable --py jupyterlab_git &&\
-
-
-WORKDIR /root/work
-
-COPY run-lab /usr/local/bin/run-lab
-RUN chmod u+x /usr/local/bin/run-lab
+  jupyter lab build
 
 ENTRYPOINT run-lab
