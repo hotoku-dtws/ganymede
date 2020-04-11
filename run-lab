@@ -9,4 +9,4 @@ while getopts p: OPT; do
     esac
 done
 
-jupyter lab --ip=0.0.0.0 --allow-root --port=${PORT}
+jupyter lab --ip=0.0.0.0 --allow-root --port=${PORT} --NotebookApp.token=''
