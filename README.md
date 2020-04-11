@@ -10,11 +10,8 @@
 以下のコマンドによって、マシンの中にイメージが作成される。このコマンドは、最初に1回だけ行えば良い。
 
 ```
-$ git clone git@github.com:hotoku-dtws/ganymede
-$ cd ganymede
-$ docker build . -t ganymede
+$ make
 ```
-
 
 
 
