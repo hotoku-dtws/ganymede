@@ -1,12 +1,5 @@
 FROM python
 
-RUN mkdir -p /root/work
-WORKDIR /root/work
-
-COPY run-lab /usr/local/bin/run-lab
-RUN chmod u+x /usr/local/bin/run-lab
-
-
 RUN \
   mkdir -p /root/build &&\
   cd /root/build &&\
@@ -49,5 +42,11 @@ RUN \
     &&\
   jupyter labextension install @jupyterlab/toc &&\
   jupyter lab build
+
+RUN mkdir -p /root/work
+WORKDIR /root/work
+
+COPY run-lab /usr/local/bin/run-lab
+RUN chmod u+x /usr/local/bin/run-lab
 
 ENTRYPOINT run-lab
