@@ -1,7 +1,6 @@
 # ganymede
 
-## 概要
-### What is this ?
+## 概要: What is this ?
 データ分析に利用する様々なパッケージを詰め込んだPythonの環境
 
 ## 使い方 
