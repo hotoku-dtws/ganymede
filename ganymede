@@ -14,8 +14,9 @@ start(){
         cat ${LOGFILE}
         exit 1
     fi
-    local URL=$(grep "http://127.0.0.1:8888" ${LOGFILE} | tail -n1 | sed -E "s/.+(http:)/\1/")
-    echo ${URL}
+    local TOKEN=$(grep "http://127.0.0.1:8888" ${LOGFILE} | tail -n1 | sed -E "s/.+token=(.+)/\1/")
+    URL=http://localhost:${PORT}/?token=${TOKEN}
+    echo URL=${URL}
     open ${URL}
 }
 
@@ -23,20 +24,32 @@ end(){
     docker stop ${NAME}
 }
 
-CMD=start
+set_cmd(){
+    if ! [ -z "${CMD}" ]; then
+        echo "Error: 2 of -s and -e are given"
+        exit 1
+    fi
+    CMD=$1
+}
+
+CMD=""
 PORT=8888
 VOLUME=$(pwd)
 NAME=ganymede
-getopts sep:v:n:h OPT
-case ${OPT} in
-    s) CMD=start ;;
-    e) CMD=end ;;
-    p) PORT=${OPTARG} ;;
-    v) VOLUME=${OPTARG} ;;
-    n) NAME=${OPTARG} ;;
-    h) print_usage; exit ;;
-esac
+while getopts sep:v:n:h OPT; do
+    case ${OPT} in
+        s) set_cmd start ;;
+        e) set_cmd end ;;
+        p) PORT=${OPTARG} ;;
+        v) VOLUME=${OPTARG} ;;
+        n) NAME=${OPTARG} ;;
+        h) print_usage; exit ;;
+    esac
+done
 
+if [ -z ${CMD} ]; then
+    CMD=start
+fi
 ${CMD}
 
 # Local Variables:
