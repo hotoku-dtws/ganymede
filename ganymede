@@ -1,0 +1,38 @@
+#!/bin/bash
+
+print_usage(){
+    echo "ganymede [-s] [-e] [-h] [-p PORT] [-v VOLUME] [-n NAME]"
+}
+
+start(){
+    local LOGFILE=$(mktemp)
+    echo LOGFILE=${LOGFILE}
+    docker run -d --rm -v ${VOLUME}:/root/work -p ${PORT}:8888 --name ${NAME} hotokudtws/ganymede > ${LOGFILE} 2>&1
+    sleep 1
+    grep "http://127.0.0.1:8888" ${LOGFILE} | xargs open
+}
+
+end(){
+    docker stop ${NAME}
+}
+
+CMD=""
+PORT=8888
+VOLUME=$(pwd)
+NAME=ganymede
+getopts sehp:v: OPT
+case ${OPT} in
+    s) CMD=start ;;
+    e) CMD=end ;;
+    p) PORT=${OPTARG} ;;
+    v) VOLUME=${OPTARG} ;;
+    n) NAME=${OPTARG} ;;
+    h) print_usage; exit ;;
+    ?) print_usage; exit ;;
+esac
+
+${CMD}
+
+# Local Variables:
+# mode: Shell-script
+# End:
