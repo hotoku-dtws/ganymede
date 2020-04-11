@@ -17,9 +17,12 @@ RUN \
   apt-get install -y npm &&\
   pip install \
     Cython \
+    colormath \
     folium \
+    gensim \
     geojson \
     h3 \
+    japanize-matplotlib \
     jismesh \
     jupyterlab \
     jupyterlab-git \
@@ -37,14 +40,12 @@ RUN \
     seaborn \
     statsmodels \
     xgboost \
-    gensim \
-    colormath &&\
+    &&\
   jupyter labextension install @jupyterlab/toc &&\
   jupyter labextension install @jupyterlab/git &&\
   jupyter lab build &&\
   jupyter serverextension enable --py jupyterlab_git &&\
 
-RUN pip install japanize-matplotlib
 
 WORKDIR /root/work
 
