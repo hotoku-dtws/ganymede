@@ -7,20 +7,27 @@ print_usage(){
 start(){
     local LOGFILE=$(mktemp)
     echo LOGFILE=${LOGFILE}
-    docker run -d --rm -v ${VOLUME}:/root/work -p ${PORT}:8888 --name ${NAME} hotokudtws/ganymede > ${LOGFILE} 2>&1
-    sleep 1
-    grep "http://127.0.0.1:8888" ${LOGFILE} | xargs open
+    docker run --rm -v ${VOLUME}:/root/work -p ${PORT}:8888 --name ${NAME} hotokudtws/ganymede > ${LOGFILE} 2>&1 &
+    local PID=$!
+    sleep 3
+    if ! ps -p ${PID} > /dev/null; then
+        cat ${LOGFILE}
+        exit 1
+    fi
+    local URL=$(grep "http://127.0.0.1:8888" ${LOGFILE} | tail -n1 | sed -E "s/.+(http:)/\1/")
+    echo ${URL}
+    open ${URL}
 }
 
 end(){
     docker stop ${NAME}
 }
 
-CMD=""
+CMD=start
 PORT=8888
 VOLUME=$(pwd)
 NAME=ganymede
-getopts sehp:v: OPT
+getopts sep:v:n:h OPT
 case ${OPT} in
     s) CMD=start ;;
     e) CMD=end ;;
@@ -28,7 +35,6 @@ case ${OPT} in
     v) VOLUME=${OPTARG} ;;
     n) NAME=${OPTARG} ;;
     h) print_usage; exit ;;
-    ?) print_usage; exit ;;
 esac
 
 ${CMD}
