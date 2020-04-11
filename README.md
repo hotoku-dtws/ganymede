@@ -36,8 +36,6 @@ Or copy and paste one of these URLs:
 終了するには、Jupyterを起動したターミナルで`Ctrl-c`を押す。
 
 ### ターミナルにログイン
-終了するには、Jupyterを起動したターミナルで`Ctrl-c`を押す。
-
 ```
 $ docker run -it --rm -v [ホスト側の絶対パス]:/root/work --name [コンテナ名] hotokudtws/ganymede /bin/bash
 ```
