@@ -42,7 +42,7 @@ RUN \
     xgboost \
     &&\
   jupyter labextension install @jupyterlab/toc &&\
-  jupyter labextension install @jupyterlab/git &&\
+#  jupyter labextension install @jupyterlab/git &&\
   jupyter lab build &&\
   jupyter serverextension enable --py jupyterlab_git &&\
 
