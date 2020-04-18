@@ -1,4 +1,4 @@
-FROM python
+FROM python:3.8.2
 
 RUN \
   mkdir -p /root/build &&\
@@ -11,35 +11,12 @@ RUN \
   apt update &&\
   apt-get install -y nodejs &&\
   apt-get install -y npm &&\
-  pip install pystan &&\
   rm -rf /root/build
 
-RUN \
-  pip install \
-    Cython \
-    colormath \
-    folium \
-    gensim \
-    geojson \
-    h3 \
-    japanize-matplotlib \
-    jismesh \
-    jupyterlab \
-    jupyterlab-git \
-    lightgbm \
-    matplotlib \
-    nodejs \
-    numpy \
-    optuna \
-    pandas \
-    plotly \
-    python-dateutil \
-    scikit-learn \
-    scipy \
-    seaborn \
-    statsmodels \
-    xgboost \
-    &&\
+
+COPY requirements.txt /tmp
+RUN \ 
+  pip install -r /tmp/requirements.txt &&\
   jupyter labextension install @jupyterlab/toc &&\
   jupyter lab build
 
@@ -49,4 +26,4 @@ WORKDIR /root/work
 COPY run-lab /usr/local/bin/run-lab
 RUN chmod u+x /usr/local/bin/run-lab
 
-ENTRYPOINT run-lab
+CMD run-lab
