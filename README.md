@@ -65,3 +65,6 @@ ganymede -e
 
 ## 何でdtws/ganymedeではなくhotoku-dtws/ganymedeなのか？
 Datawise社の資産なので、本来はdtws/ganymedeで作るべきだが、Dockerhubとの連携で、組織のレポジトリと連携する方法が分からなかったので、いったん個人ユーザーで作成している。
+
+## TODO
+- pandoc, texlive-xetexのインストールを追加（export pdfができなかった）
