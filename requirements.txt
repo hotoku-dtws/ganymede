@@ -6,7 +6,7 @@ h3==3.4.3
 japanize-matplotlib==1.0.5
 jismesh==2.1.0
 jupyterlab-git==0.10.0
-jupyterlab==2.1.0
+jupyterlab==2.2.10
 lightgbm==2.3.1
 matplotlib==3.2.1
 nodejs==0.1.1
